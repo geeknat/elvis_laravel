@@ -13,6 +13,6 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::get('/asset/{tag}', 'AssetsController@findByTag');
+Route::get('/asset', 'AssetsController@findByTag');
 Route::get('/history/{userId}', 'AssetsController@getUserHistory');
 Route::post('/login', 'UserController@login');

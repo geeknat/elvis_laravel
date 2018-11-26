@@ -9,8 +9,14 @@ use Illuminate\Support\Facades\DB;
 class AssetsController extends Controller
 {
 
-    public function findByTag(Request $request, $tag)
+    public function findByTag(Request $request)
     {
+
+        $tagInput = $request->input('tag');
+
+        $explodedTag = explode("/",$tagInput);
+
+        $tag = strtoupper($explodedTag[5]);
 
         $userId = $request->input('user_id');
 
