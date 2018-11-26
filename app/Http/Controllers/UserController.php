@@ -19,6 +19,7 @@ class UserController
     public function login(Request $request)
     {
 
+
         if ($request->has('username') && $request->has('password')) {
 
             $userName = $request->input('username');
@@ -38,7 +39,7 @@ class UserController
                 return response()->json(array('success' => 1, 'message' => $user[0]), 200);
             }
 
-            return response()->json(array('success' => 0, 'message' => 'Failed to log in'), 200);
+            return response()->json(array('success' => 0, 'message' => 'Invalid credentials'), 200);
 
         }
 

@@ -109,9 +109,9 @@ class AssetsController extends Controller
                     ->get();
 
                 if ($issueLocation->count() > 0) {
-                    $asset->issue_location_name = $issueLocation->name;
+                    $item->issue_location_name = $issueLocation->name;
                 } else {
-                    $asset->issue_location_name = "";
+                    $item->issue_location_name = "";
                 }
 
             }
