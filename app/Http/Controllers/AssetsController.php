@@ -19,29 +19,20 @@ class AssetsController extends Controller
             ->join('locations', 'assets.rtd_location_id', '=', 'locations.id')
             ->join('status_labels', 'assets.status_id', '=', 'status_labels.id')
             ->join('suppliers', 'assets.supplier_id', '=', 'suppliers.id')
-            ->join('users', 'assets.assigned_to', '=', 'users.id')
             ->select('assets.*',
                 'models.name AS model_name',
                 'models.model_number',
                 'locations.name AS location_name',
                 'status_labels.name AS status_label',
-                'suppliers.name AS supplier_name',
-                'users.email AS email'
-            )
+                'suppliers.name AS supplier_name')
             ->where('assets.asset_tag', $tag)
             ->get();
 
-        //TODO -> STORE IN HISTORY
-
-        if (sizeof($assets) == 0) {
-            return response()->json(array('success' => 0, 'message' => "No such asset found"), 200);
-        }
 
 
         foreach ($assets as $asset) {
 
             //check for iss_location_id
-
             $issueLocation = DB::table('locations')
                 ->select('name')
                 ->where('id', $asset->iss_location_id)
@@ -51,6 +42,19 @@ class AssetsController extends Controller
                 $asset->issue_location_name = $issueLocation->name;
             } else {
                 $asset->issue_location_name = "";
+            }
+
+
+            //check user assigned to
+            $assignedTo = DB::table('users')
+                ->select('email')
+                ->where('id', $asset->assigned_to)
+                ->get();
+
+            if ($assignedTo->count() > 0) {
+                $asset->email = $assignedTo->email;
+            } else {
+                $asset->email = "";
             }
 
             DB::table('user_history')->insert(
@@ -112,6 +116,18 @@ class AssetsController extends Controller
                     $item->issue_location_name = $issueLocation->name;
                 } else {
                     $item->issue_location_name = "";
+                }
+
+                //check user assigned to
+                $assignedTo = DB::table('users')
+                    ->select('email')
+                    ->where('id', $item->assigned_to)
+                    ->get();
+
+                if ($assignedTo->count() > 0) {
+                    $item->email = $assignedTo->email;
+                } else {
+                    $item->email = "";
                 }
 
             }
