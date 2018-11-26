@@ -91,15 +91,12 @@ class AssetsController extends Controller
                 ->join('locations', 'assets.rtd_location_id', '=', 'locations.id')
                 ->join('status_labels', 'assets.status_id', '=', 'status_labels.id')
                 ->join('suppliers', 'assets.supplier_id', '=', 'suppliers.id')
-                ->join('users', 'assets.assigned_to', '=', 'users.id')
                 ->select('assets.*',
                     'models.name AS model_name',
                     'models.model_number',
                     'locations.name AS location_name',
                     'status_labels.name AS status_label',
-                    'suppliers.name AS supplier_name',
-                    'users.email AS email'
-                )
+                    'suppliers.name AS supplier_name')
                 ->where('assets.id', $asset->asset_id)
                 ->get();
 
@@ -117,6 +114,7 @@ class AssetsController extends Controller
                 } else {
                     $item->issue_location_name = "";
                 }
+
 
                 //check user assigned to
                 $assignedTo = DB::table('users')
