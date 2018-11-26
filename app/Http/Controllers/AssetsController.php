@@ -39,7 +39,7 @@ class AssetsController extends Controller
                 ->get();
 
             if ($issueLocation->count() > 0) {
-                $asset->issue_location_name = $issueLocation->name;
+                $asset->issue_location_name = $issueLocation[0]->name;
             } else {
                 $asset->issue_location_name = "";
             }
@@ -52,7 +52,7 @@ class AssetsController extends Controller
                 ->get();
 
             if ($assignedTo->count() > 0) {
-                $asset->email = $assignedTo->email;
+                $asset->email = $assignedTo[0]->email;
             } else {
                 $asset->email = "";
             }
@@ -110,7 +110,7 @@ class AssetsController extends Controller
                     ->get();
 
                 if ($issueLocation->count() > 0) {
-                    $item->issue_location_name = $issueLocation->name;
+                    $item->issue_location_name = $issueLocation[0]->name;
                 } else {
                     $item->issue_location_name = "";
                 }
@@ -123,7 +123,7 @@ class AssetsController extends Controller
                     ->get();
 
                 if ($assignedTo->count() > 0) {
-                    $item->email = $assignedTo->email;
+                    $item->email = $assignedTo[0]->email;
                 } else {
                     $item->email = "";
                 }
