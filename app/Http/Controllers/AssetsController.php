@@ -12,11 +12,7 @@ class AssetsController extends Controller
     public function findByTag(Request $request)
     {
 
-        $tagInput = $request->input('tag');
-
-        $explodedTag = explode("/",$tagInput);
-
-        $tag = strtoupper($explodedTag[5]);
+        $tag = $request->input('tag');
 
         $userId = $request->input('user_id');
 
