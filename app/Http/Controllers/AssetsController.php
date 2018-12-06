@@ -76,6 +76,7 @@ class AssetsController extends Controller
             ->select('*')
             ->where('user_id', $userId)
             ->orderBy('id', 'desc')
+            ->limit(50)
             ->get();
 
         //TODO -> STORE IN HISTORY

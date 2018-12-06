@@ -16,3 +16,4 @@ use Illuminate\Http\Request;
 Route::get('/asset', 'AssetsController@findByTag');
 Route::get('/history/{userId}', 'AssetsController@getUserHistory');
 Route::post('/login', 'UserController@login');
+Route::post('/ms', 'UserController@microsoft');
