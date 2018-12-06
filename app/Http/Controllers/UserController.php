@@ -52,7 +52,7 @@ class UserController
     {
 
 
-        if ($request->has('email') && $request->has('f_name')) {
+        if ($request->has('email')) {
 
             $email = $request->input('email');
             $firstName = $request->input('f_name');
@@ -64,24 +64,8 @@ class UserController
                 ->get();
 
             if ($user->count() == 0) {
-
                 //add user
-
-                $userId = DB::table('users')->insertGetId(
-                    [
-                        'email' => $email,
-                        'password' => Hash::make("0012345"),
-                        'first_name' => $firstName,
-                        'last_name' => $lastName,
-                    ]
-                );
-
-                $user = DB::table('users')
-                    ->select('id', 'first_name', 'last_name', 'username', 'email')
-                    ->where('id', $userId)
-                    ->get();
-
-                return response()->json(array('success' => 1, 'message' => $user[0]), 200);
+                return response()->json(array('success' => 0, 'message' => 'Failed to log in'), 200);
             }
 
             return response()->json(array('success' => 1, 'message' => $user[0]), 200);
